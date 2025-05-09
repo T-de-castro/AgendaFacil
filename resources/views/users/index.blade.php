@@ -30,7 +30,9 @@
             <td>{{$user->email}}</td>
             <td>
                 <a href="{{route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                <form action="{{route('users.destroy', $user->id)}}">
+                <form action="{{route('users.destroy', $user->id)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
                     <button class="btn btn-danger btn-sm">Excluir</button>
                 </form>
             </td>
