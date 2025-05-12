@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserProfile;
+
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -31,6 +33,8 @@ class UserController extends Controller
     }
 
     public function edit(User $user){
+        //Vai buscar a relação profile no model User
+        $user->load('profile');
         return view('users.edit', compact('user'));
     }
 
@@ -49,10 +53,49 @@ class UserController extends Controller
             ->with('status', 'Usuário editado com sucesso!');
     }
 
+    public function updateProfile(User $user, Request $request){
+        $users =$request->validate([
+            'type' => 'required',
+            'address' => 'nullable',
+        ]);
+
+        //Irá verificar se já existe um user_id, caso tenha irá atualizar, caso não tenha criar, com os dados do $request
+        UserProfile::updateOrCreate([
+            'user_id' => $user->id,
+        ], [
+            'type' => $request->type,
+            'address' => $request->address
+        ]);
+
+        //Irá criar um novo registro toda vez
+        //$user->profile()->create($request);
+
+        return back()
+            //->Route('users.edit', $user->id)
+            ->with('status', 'Usuário editado com sucesso!');
+    }
+
+    public function updateInterests(User $user, Request $request){
+        $users =$request->validate([
+            'interests' => 'nullable|array'
+        ]);
+
+        $user->interests()->delete();
+
+        if(!empty($users['interests'])){
+            $user->interests()->createMany($users['interests']);
+        }
+
+        return back()
+            ->with('status', 'Usuário deletado com sucesso!');
+    }
+
     public function destroy(User $user){
         $user->delete();
 
         return back()
             ->with('status', 'Usuário deletado com sucesso!');
     }
+
+
 }
