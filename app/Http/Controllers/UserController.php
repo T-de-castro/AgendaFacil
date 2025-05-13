@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Models\Role;
 
 use Illuminate\Http\Request;
 
@@ -34,8 +35,9 @@ class UserController extends Controller
 
     public function edit(User $user){
         //Vai buscar a relação profile no model User
-        $user->load('profile');
-        return view('users.edit', compact('user'));
+        $user->load(['profile', 'interests']);
+        $roles = Role::all();
+        return view('users.edit', compact('user', 'roles'));
     }
 
     public function update(User $user, Request $request){
@@ -88,6 +90,14 @@ class UserController extends Controller
 
         return back()
             ->with('status', 'Usuário deletado com sucesso!');
+    }
+
+    public function updateRoles(User $user, Request $request){
+        $users =$request->validate([
+            'roles' => 'request|array'
+        ]);
+
+        dd($users->all());
     }
 
     public function destroy(User $user){
