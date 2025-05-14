@@ -13,6 +13,13 @@
     </div>
 @endsession('status')
 
+<form action="{{Route('users.index')}}" method="GET" class="mb-3">
+<div class="input-group input-group-sm">
+    <input type="text" name="keyword" placeholder="Pesquise por Nome ou E-mail" class="form-control" value="{{request()?->keyword}}">
+    <button class="btn btn-primary" type="submit">Pesquisar</button>
+</div>
+</form>
+
 <table class="table">
     <thead>
       <tr>
@@ -30,14 +37,18 @@
             <td>{{$user->email}}</td>
             <td>
                 <a href="{{route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                @can('destroy', \App\Models\User::class)
                 <form action="{{route('users.destroy', $user->id)}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger btn-sm">Excluir</button>
                 </form>
+                @endcan
             </td>
         </tr>
         @endforeach
     </tbody>
   </table>
+
+  {{$users->links()}}
 @endsection

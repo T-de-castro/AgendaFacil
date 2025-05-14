@@ -11,7 +11,13 @@
     <div class="card-body">
         @foreach ($roles as $role)
             <div class="form-check">
-                <input class="form-check-input @error('roles') is-invalid @enderror" type="checkbox" value="{{$role->id}}" name="roles[]" >
+                <input
+                    class="form-check-input @error('roles') is-invalid @enderror"
+                    type="checkbox"
+                    value="{{$role->id}}"
+                    name="roles[]"
+                    @checked(in_array($role->name, $user->roles->pluck('name')->toArray()))
+                >
                 <label class="form-check-label">
                 {{$role->name}}
                 </label>
