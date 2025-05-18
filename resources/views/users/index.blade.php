@@ -21,6 +21,12 @@
 </form>
 
 <table class="table">
+    <colgroup>
+        <col style="width: 5%">
+        <col style="width: 40%">
+        <col style="width: 35%">
+        <col style="width: 20%">
+    </colgroup>
     <thead>
       <tr>
         <th scope="col">ID</th>
@@ -36,13 +42,17 @@
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>
-                <a href="{{route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                @can('destroy', \App\Models\User::class)
-                <form action="{{route('users.destroy', $user->id)}}" method="POST">
+                <div class="d-flex gap-1">
+                    <a href="{{route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                    @can('destroy', \App\Models\User::class)
+                    <form action="{{route('users.destroy', $user->id)}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger btn-sm">Excluir</button>
-                </form>
+                    <button class="btn btn-warning btn-sm">Status</button>
+
+                    </form>
+                </div>
                 @endcan
             </td>
         </tr>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\Role;
-use App\Http\Controllers\Gate;
 
 use Illuminate\Http\Request;
 
@@ -20,7 +19,7 @@ class UserController extends Controller
             });
         });
 
-        $users = $users->orderBy('name', 'desc')->paginate(2);
+        $users = $users->orderBy('name')->paginate(2);
         return view('users.index', compact('users'));
     }
 
@@ -43,7 +42,7 @@ class UserController extends Controller
     }
 
     public function edit(User $user){
-        Gate::authorize('edit', User::class);
+        //Gate::authorize('edit', User::class);
         //Vai buscar a relação profile no model User
         $user->load(['profile', 'interests']);
         $roles = Role::all();
@@ -55,7 +54,7 @@ class UserController extends Controller
     }
 
     public function update(User $user, Request $request){
-        Gate::authorize('edit', User::class);
+        //Gate::authorize('edit', User::class);
         $users =$request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -71,7 +70,7 @@ class UserController extends Controller
     }
 
     public function updateProfile(User $user, Request $request){
-        Gate::authorize('edit', User::class);
+        //Gate::authorize('edit', User::class);
         $users =$request->validate([
             'type' => 'required',
             'address' => 'nullable',
@@ -94,7 +93,7 @@ class UserController extends Controller
     }
 
     public function updateInterests(User $user, Request $request){
-        Gate::authorize('edit', User::class);
+        //Gate::authorize('edit', User::class);
         $users =$request->validate([
             'interests' => 'nullable|array'
         ]);
@@ -110,7 +109,7 @@ class UserController extends Controller
     }
 
     public function updateRoles(User $user, Request $request){
-        Gate::authorize('edit', User::class);
+        //Gate::authorize('edit', User::class);
         $users =$request->validate([
             'roles' => 'required|array'
         ]);
