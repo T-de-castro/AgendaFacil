@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="PT">
+<html lang="pt-BR">
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

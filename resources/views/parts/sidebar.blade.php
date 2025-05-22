@@ -35,6 +35,12 @@
               <p>Usuários</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{Route('servico.index')}}" class="nav-link">
+              <i class="nav-icon bi bi-tools"></i>
+              <p>Serviço</p>
+            </a>
+          </li>
           <li class="nav-header">LABELS</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
