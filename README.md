@@ -12,6 +12,6 @@ Para executar o programa, é necessário baixar o código via git clone, e execu
 -> Nomamente no cmd:
 - php artisan key:generate
 - php artisan migrate;
-- php run serve
+- php artisan serve
 
 Assim o link já estará disponível, porém ainda é necessário cadastrar as roles (cargos), para que sejam listados no cadastro dos usuários.
